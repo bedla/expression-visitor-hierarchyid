@@ -18,6 +18,8 @@ public class Antlr4Main {
         );
 
         List.of(
+                "NOT A OR B",
+                "A AND NOT B AND C",
                 "NOT D",
                 "A AND B OR C AND D",
                 "A OR B AND C OR D",
