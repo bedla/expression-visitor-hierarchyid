@@ -4,6 +4,11 @@ import static java.util.stream.Collectors.joining;
 
 class PrintVisitor implements ExpressionVisitor<String> {
     @Override
+    public String visit(VariableExpression expression) {
+        return expression.getVariableName();
+    }
+
+    @Override
     public String visit(BooleanExpression expression) {
         return String.valueOf(expression.getValue());
     }

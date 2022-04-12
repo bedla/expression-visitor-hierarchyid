@@ -6,6 +6,7 @@ import cz.bedla.hierarchyid.expression.Expression;
 import cz.bedla.hierarchyid.expression.ExpressionVisitor;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
+import cz.bedla.hierarchyid.expression.VariableExpression;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -14,6 +15,11 @@ import java.util.List;
 
 class CreateExpressionDefinitionVisitor implements ExpressionVisitor<CreateExpressionDefinitionVisitor.Node> {
     private final Deque<Node> currentParent = new LinkedList<>();
+
+    @Override
+    public Node visit(VariableExpression expression) {
+        throw new IllegalStateException("not supported yet");
+    }
 
     @Override
     public Node visit(BooleanExpression expression) {

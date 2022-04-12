@@ -70,3 +70,7 @@ ExpressionDefinition{hierarchyId='/2/3/', type=VALUE, operator=null, operand=tru
 See `LogicalStringToExpressionMain` for conversion.
 
 See `Antlr4Main` for `EvalVisitor` and `AddParenthesesVisitor`.
+
+## Convert expression to logical string without parentheses
+
+See `FlattenMainApplication` for conversion. 

@@ -2,6 +2,11 @@ package cz.bedla.hierarchyid.expression;
 
 class EvalVisitor implements ExpressionVisitor<Boolean> {
     @Override
+    public Boolean visit(VariableExpression expression) {
+        throw new IllegalStateException("not supported yet");
+    }
+
+    @Override
     public Boolean visit(BooleanExpression expression) {
         return expression.getValue();
     }

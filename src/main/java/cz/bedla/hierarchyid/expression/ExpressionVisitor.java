@@ -1,6 +1,8 @@
 package cz.bedla.hierarchyid.expression;
 
 public interface ExpressionVisitor<T> {
+    T visit(VariableExpression expression);
+
     T visit(BooleanExpression expression);
 
     T visit(AndExpression expression);
@@ -10,7 +12,9 @@ public interface ExpressionVisitor<T> {
     T visit(NotExpression expression);
 
     default T visit(Expression expression) {
-        if (expression instanceof BooleanExpression) {
+        if (expression instanceof VariableExpression) {
+            return visit((VariableExpression) expression);
+        } else if (expression instanceof BooleanExpression) {
             return visit((BooleanExpression) expression);
         } else if (expression instanceof AndExpression) {
             return visit((AndExpression) expression);
