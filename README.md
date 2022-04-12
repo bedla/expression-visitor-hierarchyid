@@ -64,3 +64,9 @@ ExpressionDefinition{hierarchyId='/2/1/', type=VALUE, operator=null, operand=tru
 ExpressionDefinition{hierarchyId='/2/2/', type=VALUE, operator=null, operand=false}
 ExpressionDefinition{hierarchyId='/2/3/', type=VALUE, operator=null, operand=true}
 ```
+
+## Convert logical expression without parentheses to Expression
+
+See `LogicalStringToExpressionMain` for conversion.
+
+See `Antlr4Main` for `EvalVisitor` and `AddParenthesesVisitor`.
