@@ -3,12 +3,12 @@ package cz.bedla.hierarchyid.db;
 import java.util.ArrayList;
 import java.util.List;
 
-class ExpressionDefinitionNode<VAL, ED extends ExpressionDefinition<VAL, ED>, SELF extends ExpressionDefinitionNode<VAL, ED, SELF>> {
+public abstract class ExpressionDefinitionNode<VAL, ED extends ExpressionDefinition<VAL, ED>, SELF extends ExpressionDefinitionNode<VAL, ED, SELF>> {
     private final int id;
     private final ED expressionDefinition;
     private final List<SELF> children;
 
-    ExpressionDefinitionNode(int id, ED expressionDefinition) {
+    public ExpressionDefinitionNode(int id, ED expressionDefinition) {
         this.id = id;
         this.expressionDefinition = expressionDefinition;
         this.children = new ArrayList<>();

@@ -1,17 +1,19 @@
-package cz.bedla.hierarchyid.expression;
+package cz.bedla.hierarchyid.expression.id;
+
+import cz.bedla.hierarchyid.expression.TerminalExpression;
 
 import java.util.Objects;
 
-public class VariableExpression extends TerminalExpression<String> {
-    public VariableExpression(String variableName) {
-        super(variableName);
+public class IdExpression extends TerminalExpression<Integer> {
+    public IdExpression(int id) {
+        super(id);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VariableExpression that = (VariableExpression) o;
+        IdExpression that = (IdExpression) o;
         return Objects.equals(getValue(), that.getValue());
     }
 
@@ -22,6 +24,6 @@ public class VariableExpression extends TerminalExpression<String> {
 
     @Override
     public String toString() {
-        return getValue();
+        return String.valueOf(getValue());
     }
 }

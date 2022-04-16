@@ -3,7 +3,7 @@ package cz.bedla.hierarchyid;
 import cz.bedla.hierarchyid.antlr4.LogicalStringToExpressionVisitor;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanLexer;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanParser;
-import cz.bedla.hierarchyid.expression.FlattenVisitor;
+import cz.bedla.hierarchyid.expression.toolvisitors.FlattenVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 

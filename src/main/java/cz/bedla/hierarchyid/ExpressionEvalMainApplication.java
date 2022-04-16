@@ -1,12 +1,12 @@
 package cz.bedla.hierarchyid;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.BooleanExpression;
-import cz.bedla.hierarchyid.expression.EvalVisitor;
+import cz.bedla.hierarchyid.expression.bool.BooleanExpression;
+import cz.bedla.hierarchyid.expression.toolvisitors.EvalVisitor;
 import cz.bedla.hierarchyid.expression.Expression;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
-import cz.bedla.hierarchyid.expression.PrintVisitor;
+import cz.bedla.hierarchyid.expression.toolvisitors.PrintVisitor;
 
 public class ExpressionEvalMainApplication {
     public static void main(String[] args) {

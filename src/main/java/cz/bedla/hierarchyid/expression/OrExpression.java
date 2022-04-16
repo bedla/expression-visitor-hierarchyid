@@ -1,6 +1,7 @@
 package cz.bedla.hierarchyid.expression;
 
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.joining;
 
@@ -29,5 +30,18 @@ public class OrExpression implements Expression {
         return "(OR " + expressions.stream()
                 .map(Object::toString)
                 .collect(joining(" ", "", "")) + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrExpression that = (OrExpression) o;
+        return Objects.equals(expressions, that.expressions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(expressions);
     }
 }

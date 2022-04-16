@@ -15,9 +15,4 @@ public abstract class TerminalExpression<V> implements Expression {
     public V getValue() {
         return value;
     }
-
-    @Override
-    public String toString() {
-        return "Term(" + value + ")";
-    }
 }
