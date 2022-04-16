@@ -1,0 +1,61 @@
+GET http://localhost:8080/fact-expression/999
+Accept: application/json
+
+###
+
+GET http://localhost:8080/fact-expression/1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/fact-expression/2
+Accept: application/json
+
+###
+
+POST http://localhost:8080/fact-expression
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "leftOperator": null,
+    "columnName": "COL_AAA",
+    "operator": "EQ",
+    "value": "foo",
+    "rightOperator": "AND"
+  },
+  {
+    "leftOperator": "NOT",
+    "columnName": "COL_BBB",
+    "operator": "LT",
+    "value": 123,
+    "rightOperator": "OR"
+  },
+  {
+    "leftOperator": null,
+    "columnName": "COL_CCC",
+    "operator": "GTE",
+    "value": 1000,
+    "rightOperator": null
+  }
+]
+
+
+###
+
+PUT http://localhost:8080/fact-expression/2
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "leftOperator": null,
+    "columnName": "IVOS",
+    "operator": "EQ",
+    "value": "hello",
+    "rightOperator": null
+  }
+]
+
+###

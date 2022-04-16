@@ -1,4 +1,4 @@
-package cz.bedla.hierarchyid;
+package cz.bedla.hierarchyid.main;
 
 import cz.bedla.hierarchyid.antlr4.Antlr4EvalVisitor;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanLexer;

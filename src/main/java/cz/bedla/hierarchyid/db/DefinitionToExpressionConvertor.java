@@ -2,10 +2,13 @@ package cz.bedla.hierarchyid.db;
 
 import com.google.common.base.Splitter;
 import cz.bedla.hierarchyid.expression.Expression;
+import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -73,18 +76,16 @@ public abstract class DefinitionToExpressionConvertor<VAL, ED extends Expression
     private List<NODE> findAndRemovePrefixedNodes(List<ED> list, String hierarchyIdPrefix) {
         var prefixArray = splitHierarchyId(hierarchyIdPrefix);
 
-        var result = list.stream()
-                .filter(it -> {
-                    var curArray = splitHierarchyId(it.getHierarchyId());
-                    return curArray.length == prefixArray.length + 1;
-                })
-                .map(it -> {
-                    var array = splitHierarchyId(it.getHierarchyId());
-                    var id = Integer.parseInt(array[array.length - 1]);
-                    return createNode(id, it);
-                })
-                .sorted(Comparator.comparing(ExpressionDefinitionNode::getId))
-                .toList();
+        var result = new ArrayList<NODE>();
+        for (ED expressionDefinition : list) {
+            var curArray = splitHierarchyId(expressionDefinition.getHierarchyId());
+            if (samePrefix(curArray, prefixArray)) {
+                var id = Integer.parseInt(curArray[curArray.length - 1]);
+                var node = createNode(id, expressionDefinition);
+                result.add(node);
+            }
+        }
+        result.sort(Comparator.comparing(ExpressionDefinitionNode::getId));
 
         var toRemove = result.stream()
                 .map(it -> it.getExpressionDefinition().getHierarchyId())
@@ -92,6 +93,15 @@ public abstract class DefinitionToExpressionConvertor<VAL, ED extends Expression
         list.removeIf(it -> toRemove.contains(it.getHierarchyId()));
 
         return result;
+    }
+
+    private boolean samePrefix(String[] curArray, String[] prefixArray) {
+        if (curArray.length == prefixArray.length + 1) {
+            var curArrayByPrefix = ArrayUtils.subarray(curArray, 0, prefixArray.length);
+            return Objects.deepEquals(curArrayByPrefix, prefixArray);
+        } else {
+            return false;
+        }
     }
 
     private String[] splitHierarchyId(String hierarchyId) {

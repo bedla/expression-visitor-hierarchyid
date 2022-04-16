@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+
+    <changeSet id="0" author="ivos">
+        <sql dbms="mssql" endDelimiter="GO">
+            CREATE SCHEMA foo
+        </sql>
+    </changeSet>
+
+    <changeSet id="1" author="bedla">
+        <createTable tableName="EXPRESSION_FACT_ITEM" schemaName="foo">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PARENT_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HIERARCHY" type="hierarchyid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LOGICAL_OPERATOR" type="varchar(8)"/>
+            <column name="VAL_COLUMN_NAME" type="varchar(64)"/>
+            <column name="VAL_OPERATOR" type="varchar(4)"/>
+            <column name="VAL_VALUE" type="clob"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="bedla">
+        <createTable tableName="EXPRESSION_ID_ITEM" schemaName="foo">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="PARENT_ID" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HIERARCHY" type="hierarchyid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="varchar(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LOGICAL_OPERATOR" type="varchar(8)"/>
+            <column name="VAL_ID" type="int"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

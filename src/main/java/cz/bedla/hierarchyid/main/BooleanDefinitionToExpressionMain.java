@@ -1,10 +1,10 @@
-package cz.bedla.hierarchyid;
+package cz.bedla.hierarchyid.main;
 
+import cz.bedla.hierarchyid.db.ExpressionDefinitionType;
+import cz.bedla.hierarchyid.db.LogicalOperator;
 import cz.bedla.hierarchyid.db.bool.BooleanDefinitionToExpressionConvertor;
 import cz.bedla.hierarchyid.db.bool.BooleanExpressionDefinition;
 import cz.bedla.hierarchyid.db.bool.BooleanExpressionToDefinitionConverter;
-import cz.bedla.hierarchyid.db.ExpressionDefinitionType;
-import cz.bedla.hierarchyid.db.LogicalOperator;
 
 import java.util.ArrayList;
 import java.util.List;

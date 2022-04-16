@@ -1,11 +1,11 @@
-package cz.bedla.hierarchyid;
+package cz.bedla.hierarchyid.main;
 
 import cz.bedla.hierarchyid.db.ExpressionDefinitionType;
+import cz.bedla.hierarchyid.db.LogicalOperator;
 import cz.bedla.hierarchyid.db.fact.Fact;
 import cz.bedla.hierarchyid.db.fact.FactDefinitionToExpressionConvertor;
 import cz.bedla.hierarchyid.db.fact.FactExpressionDefinition;
 import cz.bedla.hierarchyid.db.fact.FactExpressionToDefinitionConverter;
-import cz.bedla.hierarchyid.db.LogicalOperator;
 
 import java.util.ArrayList;
 import java.util.List;
