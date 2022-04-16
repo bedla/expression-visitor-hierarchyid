@@ -1,10 +1,11 @@
 # Boolean expression evaluated and converted to hiearchyId definitions
 
+Note: Before starting Spring Boot's application, start MSSQL DB by running `docker compose up` command.
+
 TBD
 
 - [ ] better description
 - [ ] unit-tests
-- [ ] conversion between Expression and Jackson API DTOs
 
 In MSSQL we
 have [hierarchyid](https://docs.microsoft.com/en-us/sql/t-sql/data-types/hierarchyid-data-type-method-reference?view=sql-server-ver15)
