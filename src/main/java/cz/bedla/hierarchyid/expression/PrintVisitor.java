@@ -2,14 +2,9 @@ package cz.bedla.hierarchyid.expression;
 
 import static java.util.stream.Collectors.joining;
 
-class PrintVisitor implements ExpressionVisitor<String> {
+public class PrintVisitor implements ExpressionVisitor<String, Object> {
     @Override
-    public String visit(VariableExpression expression) {
-        return expression.getVariableName();
-    }
-
-    @Override
-    public String visit(BooleanExpression expression) {
+    public String visit(TerminalExpression<Object> expression) {
         return String.valueOf(expression.getValue());
     }
 

@@ -1,40 +1,35 @@
 package cz.bedla.hierarchyid.db;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.BooleanExpression;
 import cz.bedla.hierarchyid.expression.Expression;
 import cz.bedla.hierarchyid.expression.ExpressionVisitor;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
-import cz.bedla.hierarchyid.expression.VariableExpression;
+import cz.bedla.hierarchyid.expression.TerminalExpression;
 
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-class CreateExpressionDefinitionVisitor implements ExpressionVisitor<CreateExpressionDefinitionVisitor.Node> {
-    private final Deque<Node> currentParent = new LinkedList<>();
+public abstract class CreateExpressionDefinitionVisitor<VAL, ED extends ExpressionDefinition<VAL, ED>> implements ExpressionVisitor<CreateExpressionDefinitionVisitor.Node<ED>, VAL> {
+    private final Deque<Node<ED>> currentParent = new LinkedList<>();
+    protected abstract ED createExpressionDefinition(ExpressionDefinitionType type, LogicalOperator logicalOperator, VAL value);
 
     @Override
-    public Node visit(VariableExpression expression) {
-        throw new IllegalStateException("not supported yet");
-    }
-
-    @Override
-    public Node visit(BooleanExpression expression) {
-        var node = new Node();
+    public Node<ED> visit(TerminalExpression<VAL> expression) {
+        var node = new Node<ED>();
         node.parent = currentParent.peekFirst();
-        node.expressionDefinition = new ExpressionDefinition(ExpressionDefinition.Type.VALUE, null, expression.getValue());
+        node.expressionDefinition = createExpressionDefinition(ExpressionDefinitionType.VALUE, null, expression.getValue());
         node.children = new ArrayList<>();
         return node;
     }
 
     @Override
-    public Node visit(AndExpression expression) {
-        var node = new Node();
+    public Node<ED> visit(AndExpression expression) {
+        var node = new Node<ED>();
 
-        var children = new ArrayList<Node>();
+        var children = new ArrayList<Node<ED>>();
         doWithParent(node, () -> {
             for (Expression it : expression.getExpressions()) {
                 children.add(it.accept(this));
@@ -42,16 +37,16 @@ class CreateExpressionDefinitionVisitor implements ExpressionVisitor<CreateExpre
         });
 
         node.parent = currentParent.peekFirst();
-        node.expressionDefinition = new ExpressionDefinition(ExpressionDefinition.Type.OPERATOR, ExpressionDefinition.Operator.AND, null);
+        node.expressionDefinition = createExpressionDefinition(ExpressionDefinitionType.LOGICAL_OPERATOR, LogicalOperator.AND, null);
         node.children = children;
         return node;
     }
 
     @Override
-    public Node visit(OrExpression expression) {
-        var node = new Node();
+    public Node<ED> visit(OrExpression expression) {
+        var node = new Node<ED>();
 
-        var children = new ArrayList<Node>();
+        var children = new ArrayList<Node<ED>>();
         doWithParent(node, () -> {
             for (Expression it : expression.getExpressions()) {
                 children.add(it.accept(this));
@@ -59,27 +54,27 @@ class CreateExpressionDefinitionVisitor implements ExpressionVisitor<CreateExpre
         });
 
         node.parent = currentParent.peekFirst();
-        node.expressionDefinition = new ExpressionDefinition(ExpressionDefinition.Type.OPERATOR, ExpressionDefinition.Operator.OR, null);
+        node.expressionDefinition = createExpressionDefinition(ExpressionDefinitionType.LOGICAL_OPERATOR, LogicalOperator.OR, null);
         node.children = children;
         return node;
     }
 
     @Override
-    public Node visit(NotExpression expression) {
-        var node = new Node();
+    public Node<ED> visit(NotExpression expression) {
+        var node = new Node<ED>();
 
-        var children = new ArrayList<Node>();
+        var children = new ArrayList<Node<ED>>();
         doWithParent(node, () ->
                 children.add(expression.getExpression().accept(this))
         );
 
         node.parent = currentParent.peekFirst();
-        node.expressionDefinition = new ExpressionDefinition(ExpressionDefinition.Type.OPERATOR, ExpressionDefinition.Operator.NOT, null);
+        node.expressionDefinition = createExpressionDefinition(ExpressionDefinitionType.LOGICAL_OPERATOR, LogicalOperator.NOT, null);
         node.children = children;
         return node;
     }
 
-    private void doWithParent(Node parent, Runnable action) {
+    private void doWithParent(Node<ED> parent, Runnable action) {
         try {
             currentParent.push(parent);
             action.run();
@@ -88,9 +83,9 @@ class CreateExpressionDefinitionVisitor implements ExpressionVisitor<CreateExpre
         }
     }
 
-    public static class Node {
-        Node parent;
-        ExpressionDefinition expressionDefinition;
-        List<Node> children;
+    public static class Node<ED> {
+        Node<ED> parent;
+        ED expressionDefinition;
+        List<Node<ED>> children;
     }
 }

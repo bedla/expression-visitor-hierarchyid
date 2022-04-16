@@ -1,26 +1,12 @@
 package cz.bedla.hierarchyid.antlr4;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.BooleanExpression;
 import cz.bedla.hierarchyid.expression.Expression;
-import cz.bedla.hierarchyid.expression.VariableExpression;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
-
-import java.util.Map;
-import java.util.Objects;
+import cz.bedla.hierarchyid.expression.VariableExpression;
 
 public class LogicalStringToExpressionVisitor extends SimpleBooleanBaseVisitor<Expression> {
-    private final Map<String, Boolean> variables;
-
-    public LogicalStringToExpressionVisitor() {
-        this(null);
-    }
-
-    public LogicalStringToExpressionVisitor(Map<String, Boolean> variables) {
-        this.variables = variables;
-    }
-
     @Override
     public Expression visitParse(SimpleBooleanParser.ParseContext ctx) {
         return super.visit(ctx.expression());
@@ -29,12 +15,7 @@ public class LogicalStringToExpressionVisitor extends SimpleBooleanBaseVisitor<E
     @Override
     public Expression visitIdentifierExpression(SimpleBooleanParser.IdentifierExpressionContext ctx) {
         var variableName = ctx.IDENTIFIER().getText();
-        if (variables == null) {
-            return new VariableExpression(variableName);
-        } else {
-            return new BooleanExpression(Objects.requireNonNull(variables.get(variableName),
-                    "Unable to find variable: " + variableName));
-        }
+        return new VariableExpression(variableName);
     }
 
     @Override

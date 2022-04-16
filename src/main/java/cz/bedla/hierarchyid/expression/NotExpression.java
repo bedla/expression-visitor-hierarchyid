@@ -8,7 +8,7 @@ public class NotExpression implements Expression {
     }
 
     @Override
-    public <T> T accept(ExpressionVisitor<T> visitor) {
+    public <R, TERM_V> R accept(ExpressionVisitor<R, TERM_V> visitor) {
         return visitor.visit(this);
     }
 

@@ -58,7 +58,9 @@
                         </goals>
                         <configuration>
                             <visitor>true</visitor>
-                            <outputDirectory>${project.build.directory}/generated-sources/antlr4/cz/bedla/hierarchyid/antlr4</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/generated-sources/antlr4/cz/bedla/hierarchyid/antlr4
+                            </outputDirectory>
                             <arguments>
                                 <argument>-package</argument>
                                 <argument>cz.bedla.hierarchyid.antlr4</argument>

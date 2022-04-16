@@ -1,5 +1,5 @@
 package cz.bedla.hierarchyid.expression;
 
 public interface Expression {
-    <T> T accept(ExpressionVisitor<T> visitor);
+    <R, TERM_V> R accept(ExpressionVisitor<R, TERM_V> visitor);
 }

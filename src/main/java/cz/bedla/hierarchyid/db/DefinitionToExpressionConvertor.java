@@ -9,17 +9,20 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toSet;
 
-public class DefinitionToExpressionConvertor {
-    public Expression convert(List<ExpressionDefinition> definitions) {
+public abstract class DefinitionToExpressionConvertor<VAL, ED extends ExpressionDefinition<VAL, ED>, NODE extends ExpressionDefinitionNode<VAL, ED, NODE>> {
+    public Expression convert(List<ED> definitions) {
         var root = createExpressionTree(definitions);
-        var expression = new CreateExpressionsVisitor().visit(root);
-        return expression;
+        return createCreateExpressionVisitor().visit(root);
     }
 
-    private ExpressionDefinitionNode createExpressionTree(List<ExpressionDefinition> list) {
+    protected abstract NODE createNode(int id, ED expressionDefinition);
+
+    protected abstract CreateExpressionsVisitor<VAL, ED, NODE> createCreateExpressionVisitor();
+
+    private NODE createExpressionTree(List<ED> list) {
         validateHierarchyIdUnique(list);
 
-        var stack = new LinkedList<ExpressionDefinitionNode>();
+        var stack = new LinkedList<NODE>();
 
         var root = findAndRemoveRoot(list);
         stack.push(root);
@@ -36,7 +39,7 @@ public class DefinitionToExpressionConvertor {
         return root;
     }
 
-    private void validateIncrementalLevelIds(List<ExpressionDefinitionNode> list) {
+    private void validateIncrementalLevelIds(List<NODE> list) {
         for (int i = 1; i <= list.size(); i++) {
             var cur = list.get(i - 1);
             if (cur.getId() != i) {
@@ -45,7 +48,7 @@ public class DefinitionToExpressionConvertor {
         }
     }
 
-    private void validateHierarchyIdUnique(List<ExpressionDefinition> list) {
+    private void validateHierarchyIdUnique(List<ED> list) {
         var ids = list.stream()
                 .map(ExpressionDefinition::getHierarchyId)
                 .collect(toSet());
@@ -54,20 +57,20 @@ public class DefinitionToExpressionConvertor {
         }
     }
 
-    private ExpressionDefinitionNode findAndRemoveRoot(List<ExpressionDefinition> list) {
+    private NODE findAndRemoveRoot(List<ED> list) {
         var roots = list.stream()
                 .filter(it -> "/".equals(it.getHierarchyId()))
                 .toList();
         if (roots.size() == 1) {
             var root = roots.get(0);
             list.removeIf(it -> it.getHierarchyId().equals(root.getHierarchyId()));
-            return new ExpressionDefinitionNode(0, root);
+            return createNode(0, root);
         } else {
             throw new IllegalStateException("Invalid number of roots");
         }
     }
 
-    private List<ExpressionDefinitionNode> findAndRemovePrefixedNodes(List<ExpressionDefinition> list, String hierarchyIdPrefix) {
+    private List<NODE> findAndRemovePrefixedNodes(List<ED> list, String hierarchyIdPrefix) {
         var prefixArray = splitHierarchyId(hierarchyIdPrefix);
 
         var result = list.stream()
@@ -78,7 +81,7 @@ public class DefinitionToExpressionConvertor {
                 .map(it -> {
                     var array = splitHierarchyId(it.getHierarchyId());
                     var id = Integer.parseInt(array[array.length - 1]);
-                    return new ExpressionDefinitionNode(id, it);
+                    return createNode(id, it);
                 })
                 .sorted(Comparator.comparing(ExpressionDefinitionNode::getId))
                 .toList();

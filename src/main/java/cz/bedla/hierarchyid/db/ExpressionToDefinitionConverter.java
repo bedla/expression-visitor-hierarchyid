@@ -11,18 +11,19 @@ import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
-public class ExpressionToDefinitionConverter {
-    public List<ExpressionDefinition> convert(Expression expression) {
-        var visitor = new CreateExpressionDefinitionVisitor();
+public abstract class ExpressionToDefinitionConverter<VAL, ED extends ExpressionDefinition<VAL, ED>> {
+    public List<ED> convert(Expression expression) {
+        var visitor = createCreateExpressionDefinitionVisitor();
         var rootExpressionDefinitionNode = visitor.visit(expression);
-        var expressionDefinitions = createExpressionDefinitions(rootExpressionDefinitionNode);
-        return expressionDefinitions;
+        return createExpressionDefinitions(rootExpressionDefinitionNode);
     }
 
-    private List<ExpressionDefinition> createExpressionDefinitions(CreateExpressionDefinitionVisitor.Node rootNode) {
-        var list = new ArrayList<ExpressionDefinition>();
+    protected abstract CreateExpressionDefinitionVisitor<VAL, ED> createCreateExpressionDefinitionVisitor();
 
-        Deque<CreateExpressionDefinitionVisitor.Node> stack = new LinkedList<>();
+    private List<ED> createExpressionDefinitions(CreateExpressionDefinitionVisitor.Node<ED> rootNode) {
+        var list = new ArrayList<ED>();
+
+        Deque<CreateExpressionDefinitionVisitor.Node<ED>> stack = new LinkedList<>();
         stack.push(rootNode);
         while (!stack.isEmpty()) {
             var curNode = stack.pop();
@@ -40,7 +41,7 @@ public class ExpressionToDefinitionConverter {
         return list;
     }
 
-    private String findPath(CreateExpressionDefinitionVisitor.Node node) {
+    private String findPath(CreateExpressionDefinitionVisitor.Node<ED> node) {
         var list = new ArrayList<>();
 
         var curNode = node;

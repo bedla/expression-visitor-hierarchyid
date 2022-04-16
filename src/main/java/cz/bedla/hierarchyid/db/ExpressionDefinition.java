@@ -2,54 +2,56 @@ package cz.bedla.hierarchyid.db;
 
 import java.util.Objects;
 
-public class ExpressionDefinition {
+public abstract class ExpressionDefinition<VAL, SELF extends ExpressionDefinition<VAL, SELF>> {
     private final String hierarchyId;
-    private final Type type;
-    private final Operator operator;
-    private final Boolean operand;
+    private final ExpressionDefinitionType type;
+    private final LogicalOperator logicalOperator;
+    private final VAL value;
 
-    public ExpressionDefinition(Type type, Operator operator, Boolean operand) {
-        this("", type, operator, operand);
+    public ExpressionDefinition(ExpressionDefinitionType type, LogicalOperator logicalOperator, VAL value) {
+        this("", type, logicalOperator, value);
     }
 
-    public ExpressionDefinition(String hierarchyId, Type type, Operator operator, Boolean operand) {
+    public ExpressionDefinition(String hierarchyId, ExpressionDefinitionType type, LogicalOperator logicalOperator, VAL value) {
         this.hierarchyId = hierarchyId;
         this.type = type;
-        this.operator = operator;
-        this.operand = operand;
+        this.logicalOperator = logicalOperator;
+        this.value = value;
     }
 
     public String getHierarchyId() {
         return hierarchyId;
     }
 
-    public Type getType() {
+    public ExpressionDefinitionType getType() {
         return type;
     }
 
-    public Operator getOperator() {
-        return operator;
+    public LogicalOperator getLogicalOperator() {
+        return logicalOperator;
     }
 
-    public Boolean getOperand() {
-        return operand;
+    public VAL getValue() {
+        return value;
     }
 
-    public ExpressionDefinition copyWith(String hierarchyId) {
-        return new ExpressionDefinition(hierarchyId, this.type, this.operator, this.operand);
+    public SELF copyWith(String hierarchyId) {
+        return create(hierarchyId, this.type, this.logicalOperator, this.value);
     }
+
+    protected abstract SELF create(String hierarchyId, ExpressionDefinitionType type, LogicalOperator logicalOperator, VAL value);
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ExpressionDefinition that = (ExpressionDefinition) o;
-        return Objects.equals(hierarchyId, that.hierarchyId) && type == that.type && operator == that.operator && Objects.equals(operand, that.operand);
+        ExpressionDefinition<?, ?> that = (ExpressionDefinition<?, ?>) o;
+        return Objects.equals(hierarchyId, that.hierarchyId) && type == that.type && logicalOperator == that.logicalOperator && Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hierarchyId, type, operator, operand);
+        return Objects.hash(hierarchyId, type, logicalOperator, value);
     }
 
     @Override
@@ -57,17 +59,8 @@ public class ExpressionDefinition {
         return "ExpressionDefinition{" +
                 "hierarchyId='" + hierarchyId + '\'' +
                 ", type=" + type +
-                ", operator=" + operator +
-                ", operand=" + operand +
+                ", logicalOperator=" + logicalOperator +
+                ", value=" + value +
                 '}';
-    }
-
-
-    public enum Type {
-        OPERATOR, VALUE
-    }
-
-    public enum Operator {
-        AND, OR, NOT
     }
 }
