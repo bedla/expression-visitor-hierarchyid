@@ -25,13 +25,13 @@ class FactRestDtoToExpressionConverterTest {
                 new FactExpressionDto(LeftOperator.NOT, "x3", FactExpressionDto.Operator.NOT_EQ, 789, null)
         ));
 
-        var expected = new OrExpression(List.of(
-                new AndExpression(List.of(
+        var expected = new OrExpression(
+                new AndExpression(
                         new FactExpression(new Fact("x1", Fact.Operator.EQ, 123)),
                         new FactExpression(new Fact("x2", Fact.Operator.GT, 456))
-                )),
+                ),
                 new NotExpression(new FactExpression(new Fact("x3", Fact.Operator.NOT_EQ, 789)))
-        ));
+        );
 
         assertThat(expression)
                 .isEqualTo(expected);

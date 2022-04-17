@@ -8,8 +8,6 @@ import cz.bedla.hierarchyid.expression.VariableExpression;
 import cz.bedla.hierarchyid.expression.fact.FactExpression;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FlattenExpressionVisitorTest {
@@ -33,10 +31,10 @@ class FlattenExpressionVisitorTest {
         var expr1 = new FactExpression(new Fact("x1", Fact.Operator.EQ, 123));
         var expr2 = new FactExpression(new Fact("x2", Fact.Operator.GT, 456));
         var expr3 = new FactExpression(new Fact("x3", Fact.Operator.NOT_EQ, 789));
-        var expression = new OrExpression(List.of(
-                new AndExpression(List.of(expr1, expr2, expr3)),
+        var expression = new OrExpression(
+                new AndExpression(expr1, new AndExpression(expr2, expr3)),
                 new NotExpression(expr3)
-        ));
+        );
 
         visitor.visit(expression);
 

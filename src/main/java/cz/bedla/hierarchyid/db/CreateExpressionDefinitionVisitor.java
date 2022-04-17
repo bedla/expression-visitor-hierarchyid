@@ -1,7 +1,6 @@
 package cz.bedla.hierarchyid.db;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.Expression;
 import cz.bedla.hierarchyid.expression.ExpressionVisitor;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
@@ -14,6 +13,7 @@ import java.util.List;
 
 public abstract class CreateExpressionDefinitionVisitor<VAL, ED extends ExpressionDefinition<VAL, ED>> implements ExpressionVisitor<CreateExpressionDefinitionVisitor.Node<ED>, VAL> {
     private final Deque<Node<ED>> currentParent = new LinkedList<>();
+
     protected abstract ED createExpressionDefinition(ExpressionDefinitionType type, LogicalOperator logicalOperator, VAL value);
 
     @Override
@@ -31,9 +31,8 @@ public abstract class CreateExpressionDefinitionVisitor<VAL, ED extends Expressi
 
         var children = new ArrayList<Node<ED>>();
         doWithParent(node, () -> {
-            for (Expression it : expression.getExpressions()) {
-                children.add(it.accept(this));
-            }
+            children.add(expression.getLeftExpression().accept(this));
+            children.add(expression.getRightExpression().accept(this));
         });
 
         node.parent = currentParent.peekFirst();
@@ -48,9 +47,8 @@ public abstract class CreateExpressionDefinitionVisitor<VAL, ED extends Expressi
 
         var children = new ArrayList<Node<ED>>();
         doWithParent(node, () -> {
-            for (Expression it : expression.getExpressions()) {
-                children.add(it.accept(this));
-            }
+            children.add(expression.getLeftExpression().accept(this));
+            children.add(expression.getRightExpression().accept(this));
         });
 
         node.parent = currentParent.peekFirst();

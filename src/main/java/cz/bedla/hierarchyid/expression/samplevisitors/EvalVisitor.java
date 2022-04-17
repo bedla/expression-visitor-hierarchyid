@@ -14,14 +14,12 @@ public class EvalVisitor implements ExpressionVisitor<Boolean, Boolean> {
 
     @Override
     public Boolean visit(AndExpression expression) {
-        return expression.getExpressions().stream()
-                .allMatch(it -> it.accept(this));
+        return expression.getLeftExpression().accept(this) && expression.getRightExpression().accept(this);
     }
 
     @Override
     public Boolean visit(OrExpression expression) {
-        return expression.getExpressions().stream()
-                .anyMatch(it -> it.accept(this));
+        return expression.getLeftExpression().accept(this) || expression.getRightExpression().accept(this);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package cz.bedla.hierarchyid.expression.visitor;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.Expression;
 import cz.bedla.hierarchyid.expression.ExpressionVisitor;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
@@ -34,27 +33,17 @@ public class FlattenExpressionVisitor implements ExpressionVisitor<Void, Object>
 
     @Override
     public Void visit(AndExpression expression) {
-        var expressions = expression.getExpressions();
-        for (int i = 0; i < expressions.size(); i++) {
-            if (i >= 1) {
-                flatten.add("AND");
-            }
-            Expression expr = expressions.get(i);
-            expr.accept(this);
-        }
+        expression.getLeftExpression().accept(this);
+        flatten.add("AND");
+        expression.getRightExpression().accept(this);
         return null;
     }
 
     @Override
     public Void visit(OrExpression expression) {
-        var expressions = expression.getExpressions();
-        for (int i = 0; i < expressions.size(); i++) {
-            if (i >= 1) {
-                flatten.add("OR");
-            }
-            Expression expr = expressions.get(i);
-            expr.accept(this);
-        }
+        expression.getLeftExpression().accept(this);
+        flatten.add("OR");
+        expression.getRightExpression().accept(this);
         return null;
     }
 

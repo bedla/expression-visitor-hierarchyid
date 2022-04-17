@@ -1,9 +1,9 @@
 package cz.bedla.hierarchyid.rest;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
-import cz.bedla.hierarchyid.expression.id.IdExpression;
 import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
+import cz.bedla.hierarchyid.expression.id.IdExpression;
 import cz.bedla.hierarchyid.rest.id.IdExpressionDto;
 import cz.bedla.hierarchyid.rest.id.IdRestDtoToExpressionConverter;
 import org.junit.jupiter.api.Test;
@@ -23,13 +23,13 @@ class IdRestDtoToExpressionConverterTest {
                 new IdExpressionDto(LeftOperator.NOT, 789, null)
         ));
 
-        var expected = new OrExpression(List.of(
-                new AndExpression(List.of(
+        var expected = new OrExpression(
+                new AndExpression(
                         new IdExpression(123),
                         new IdExpression(456)
-                )),
+                ),
                 new NotExpression(new IdExpression(789))
-        ));
+        );
 
         assertThat(expression)
                 .isEqualTo(expected);

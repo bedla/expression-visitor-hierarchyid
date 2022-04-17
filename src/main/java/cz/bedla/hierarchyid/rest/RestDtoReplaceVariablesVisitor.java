@@ -30,18 +30,16 @@ public abstract class RestDtoReplaceVariablesVisitor<DTO extends ExpressionDto, 
 
     @Override
     public Expression visit(AndExpression expression) {
-        var children = expression.getExpressions().stream()
-                .map(it -> it.accept(this))
-                .toList();
-        return new AndExpression(children);
+        var left = expression.getLeftExpression().accept(this);
+        var right = expression.getRightExpression().accept(this);
+        return new AndExpression(left, right);
     }
 
     @Override
     public Expression visit(OrExpression expression) {
-        var children = expression.getExpressions().stream()
-                .map(it -> it.accept(this))
-                .toList();
-        return new OrExpression(children);
+        var left = expression.getLeftExpression().accept(this);
+        var right = expression.getRightExpression().accept(this);
+        return new OrExpression(left, right);
     }
 
     @Override

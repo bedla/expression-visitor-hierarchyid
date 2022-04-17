@@ -18,15 +18,21 @@ public abstract class CreateExpressionsVisitor<VAL, ED extends ExpressionDefinit
         } else if (expressionDefinition.getType() == ExpressionDefinitionType.LOGICAL_OPERATOR) {
             var children = node.getChildren();
             if (expressionDefinition.getLogicalOperator() == LogicalOperator.AND) {
-                var expressions = children.stream()
-                        .map(this::visit)
-                        .toList();
-                return new AndExpression(expressions);
+                if (children.size() == 2) {
+                    var left = visit(children.get(0));
+                    var right = visit(children.get(1));
+                    return new AndExpression(left, right);
+                } else {
+                    throw new IllegalStateException("Invalid AND expressionDefinition: " + expressionDefinition);
+                }
             } else if (expressionDefinition.getLogicalOperator() == LogicalOperator.OR) {
-                var expressions = children.stream()
-                        .map(this::visit)
-                        .toList();
-                return new OrExpression(expressions);
+                if (children.size() == 2) {
+                    var left = visit(children.get(0));
+                    var right = visit(children.get(1));
+                    return new OrExpression(left, right);
+                } else {
+                    throw new IllegalStateException("Invalid OR expressionDefinition: " + expressionDefinition);
+                }
             } else if (expressionDefinition.getLogicalOperator() == LogicalOperator.NOT) {
                 if (children.size() == 1) {
                     return new NotExpression(visit(children.get(0)));

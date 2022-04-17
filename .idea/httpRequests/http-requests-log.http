@@ -1,3 +1,10 @@
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T151547.200.json
+
+###
+
 GET http://localhost:8080/fact-expression/2
 Accept: application/json
 

@@ -14,9 +14,9 @@ public class ExpressionEvalMainApplication {
         evalExpression(new BooleanExpression(false));
         evalExpression(new NotExpression(new BooleanExpression(true)));
         evalExpression(new NotExpression(new BooleanExpression(false)));
-        evalExpression(new OrExpression(new BooleanExpression(false)));
+        evalExpression(new OrExpression(new BooleanExpression(false), new BooleanExpression(false)));
         evalExpression(new OrExpression(new BooleanExpression(false), new BooleanExpression(true)));
-        evalExpression(new AndExpression(new BooleanExpression(false)));
+        evalExpression(new AndExpression(new BooleanExpression(false), new BooleanExpression(false)));
         evalExpression(new AndExpression(new BooleanExpression(false), new BooleanExpression(true)));
         evalExpression(new OrExpression(
                 new AndExpression(new BooleanExpression(false), new BooleanExpression(true)),

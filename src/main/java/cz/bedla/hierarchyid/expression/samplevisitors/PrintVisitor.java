@@ -6,8 +6,6 @@ import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
 import cz.bedla.hierarchyid.expression.TerminalExpression;
 
-import static java.util.stream.Collectors.joining;
-
 public class PrintVisitor implements ExpressionVisitor<String, Object> {
     @Override
     public String visit(TerminalExpression<Object> expression) {
@@ -16,16 +14,16 @@ public class PrintVisitor implements ExpressionVisitor<String, Object> {
 
     @Override
     public String visit(AndExpression expression) {
-        return expression.getExpressions().stream()
-                .map(it -> it.accept(this))
-                .collect(joining(" AND ", "(", ")"));
+        var left = expression.getLeftExpression().accept(this);
+        var right = expression.getRightExpression().accept(this);
+        return "(" + left + " AND " + right + ")";
     }
 
     @Override
     public String visit(OrExpression expression) {
-        return expression.getExpressions().stream()
-                .map(it -> it.accept(this))
-                .collect(joining(" OR ", "(", ")"));
+        var left = expression.getLeftExpression().accept(this);
+        var right = expression.getRightExpression().accept(this);
+        return "(" + left + " OR " + right + ")";
     }
 
     @Override

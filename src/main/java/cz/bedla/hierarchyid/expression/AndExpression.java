@@ -1,19 +1,16 @@
 package cz.bedla.hierarchyid.expression;
 
-import java.util.List;
 import java.util.Objects;
 
-import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang3.Validate.notNull;
 
 public class AndExpression implements Expression {
-    private final List<Expression> expressions;
+    private final Expression leftExpression;
+    private final Expression rightExpression;
 
-    public AndExpression(Expression... expressions) {
-        this(List.of(expressions));
-    }
-
-    public AndExpression(List<Expression> expressions) {
-        this.expressions = expressions;
+    public AndExpression(Expression leftExpression, Expression rightExpression) {
+        this.leftExpression = notNull(leftExpression, "leftExpression cannot be null");
+        this.rightExpression = notNull(rightExpression, "rightExpression cannot be null");
     }
 
     @Override
@@ -21,8 +18,18 @@ public class AndExpression implements Expression {
         return visitor.visit(this);
     }
 
-    public List<Expression> getExpressions() {
-        return expressions;
+
+    public Expression getLeftExpression() {
+        return leftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return rightExpression;
+    }
+
+    @Override
+    public String toString() {
+        return "(AND " + leftExpression + " " + rightExpression + ")";
     }
 
     @Override
@@ -30,18 +37,11 @@ public class AndExpression implements Expression {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AndExpression that = (AndExpression) o;
-        return Objects.equals(expressions, that.expressions);
+        return Objects.equals(leftExpression, that.leftExpression) && Objects.equals(rightExpression, that.rightExpression);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(expressions);
-    }
-
-    @Override
-    public String toString() {
-        return "(AND " + expressions.stream()
-                .map(Object::toString)
-                .collect(joining(" ", "", "")) + ")";
+        return Objects.hash(leftExpression, rightExpression);
     }
 }
