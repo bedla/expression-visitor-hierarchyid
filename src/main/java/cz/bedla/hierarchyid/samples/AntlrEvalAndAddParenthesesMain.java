@@ -1,9 +1,9 @@
-package cz.bedla.hierarchyid.main;
+package cz.bedla.hierarchyid.samples;
 
-import cz.bedla.hierarchyid.antlr4.Antlr4EvalVisitor;
+import cz.bedla.hierarchyid.antlr4.samplevisitors.Antlr4EvalVisitor;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanLexer;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanParser;
-import cz.bedla.hierarchyid.antlr4.ToStringWithParenthesesVisitor;
+import cz.bedla.hierarchyid.antlr4.samplevisitors.ToStringWithParenthesesVisitor;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 

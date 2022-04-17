@@ -1,4 +1,4 @@
-package cz.bedla.hierarchyid.main;
+package cz.bedla.hierarchyid.samples;
 
 import cz.bedla.hierarchyid.db.ExpressionDefinitionType;
 import cz.bedla.hierarchyid.db.LogicalOperator;

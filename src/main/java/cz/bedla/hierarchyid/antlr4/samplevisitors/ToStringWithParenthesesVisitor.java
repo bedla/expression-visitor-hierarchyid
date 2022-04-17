@@ -1,5 +1,7 @@
-package cz.bedla.hierarchyid.antlr4;
+package cz.bedla.hierarchyid.antlr4.samplevisitors;
 
+import cz.bedla.hierarchyid.antlr4.SimpleBooleanBaseVisitor;
+import cz.bedla.hierarchyid.antlr4.SimpleBooleanParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public class ToStringWithParenthesesVisitor extends SimpleBooleanBaseVisitor<String> {

@@ -1,4 +1,7 @@
-package cz.bedla.hierarchyid.antlr4;
+package cz.bedla.hierarchyid.antlr4.samplevisitors;
+
+import cz.bedla.hierarchyid.antlr4.SimpleBooleanBaseVisitor;
+import cz.bedla.hierarchyid.antlr4.SimpleBooleanParser;
 
 import java.util.Map;
 import java.util.Objects;

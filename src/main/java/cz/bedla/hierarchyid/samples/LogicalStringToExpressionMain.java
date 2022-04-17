@@ -1,4 +1,4 @@
-package cz.bedla.hierarchyid.main;
+package cz.bedla.hierarchyid.samples;
 
 import cz.bedla.hierarchyid.antlr4.LogicalStringToExpressionVisitor;
 import cz.bedla.hierarchyid.antlr4.SimpleBooleanLexer;

@@ -1,4 +1,4 @@
-package cz.bedla.hierarchyid.expression.toolvisitors;
+package cz.bedla.hierarchyid.expression.samplevisitors;
 
 import cz.bedla.hierarchyid.expression.AndExpression;
 import cz.bedla.hierarchyid.expression.ExpressionVisitor;
