@@ -1,6 +1,81 @@
 GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
 Accept: application/json
 
+<> 2022-04-17T173845.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172629.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172606.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172521.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172504.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172456.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172438.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T172319.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T171659.200.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
+<> 2022-04-17T171319.500.json
+
+###
+
+GET http://localhost:8080/fact-expression/1/sql?tableName=foo.IVOS
+Accept: application/json
+
 <> 2022-04-17T151547.200.json
 
 ###
@@ -504,64 +579,6 @@ Content-Type: application/json
 ]
 
 <> 2022-04-16T181758.500.json
-
-###
-
-POST http://localhost:8080/fact-expression/999
-Accept: application/json
-Content-Type: application/json
-
-[
-  {
-    "leftOperator": null,
-    "columnName": "COL_AAA",
-    "operator": "EQ",
-    "value": "foo",
-    "rightOperator": "AND"
-  },
-  {
-    "leftOperator": "NOT",
-    "columnName": "COL_BBB",
-    "operator": "LT",
-    "value": 123,
-    "rightOperator": "OR"
-  },
-  {
-    "leftOperator": null,
-    "columnName": "COL_BBB",
-    "operator": "GTE",
-    "value": 1000,
-    "rightOperator": null
-  }
-]
-
-<> 2022-04-16T181745.405.json
-
-###
-
-GET http://localhost:8080/fact-expression/123
-Accept: application/json
-
-###
-
-GET http://localhost:8080/fact-expression/123
-Accept: application/json
-
-<> 2022-04-16T174914.500.json
-
-###
-
-GET http://localhost:8080/fact-expression/123
-Accept: application/json
-
-<> 2022-04-16T174755.500.json
-
-###
-
-GET http://localhost:8080/fact-expression/123
-Accept: application/json
-
-<> 2022-04-16T172559.200.json
 
 ###
 

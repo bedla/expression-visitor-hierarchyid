@@ -1,6 +1,7 @@
 package cz.bedla.hierarchyid.controller;
 
 import cz.bedla.hierarchyid.rest.fact.FactExpressionDto;
+import cz.bedla.hierarchyid.rest.fact.FactSqlDto;
 import cz.bedla.hierarchyid.service.FactExpressionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -32,6 +34,14 @@ public class FactExpressionController {
     public ResponseEntity<Void> createFacts(@RequestBody List<FactExpressionDto> requestList) {
         var parentId = service.insertExpression(requestList);
         return ResponseEntity.created(URI.create("/fact-expression/" + parentId)).build();
+    }
+
+    @GetMapping("/fact-expression/{parentId}/sql")
+    public ResponseEntity<FactSqlDto> generateSql(@PathVariable("parentId") int parentId, @RequestParam("tableName") String tableName) {
+        return service.generateSql(parentId, tableName)
+                .map(FactSqlDto::new)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/fact-expression/{parentId}")

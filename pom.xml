@@ -18,6 +18,8 @@
 
         <!--versions-->
         <antlr4-maven-plugin.version>4.10.1</antlr4-maven-plugin.version>
+        <guava.version>31.1-jre</guava.version>
+        <jsqlparser.version>4.4</jsqlparser.version>
     </properties>
     <dependencies>
         <dependency>
@@ -37,11 +39,10 @@
             <artifactId>mssql-jdbc</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.antlr</groupId>
@@ -51,6 +52,11 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>${jsqlparser.version}</version>
         </dependency>
 
         <dependency>
