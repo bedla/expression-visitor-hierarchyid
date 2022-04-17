@@ -1,16 +1,32 @@
-package cz.bedla.hierarchyid.expression;
+package cz.bedla.hierarchyid.expression.visitor;
 
 import cz.bedla.hierarchyid.db.fact.Fact;
+import cz.bedla.hierarchyid.expression.AndExpression;
+import cz.bedla.hierarchyid.expression.NotExpression;
+import cz.bedla.hierarchyid.expression.OrExpression;
+import cz.bedla.hierarchyid.expression.VariableExpression;
 import cz.bedla.hierarchyid.expression.fact.FactExpression;
-import cz.bedla.hierarchyid.expression.fact.FactFlattenExpressionVisitor;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FactFlattenExpressionVisitorTest {
-    private final FactFlattenExpressionVisitor visitor = new FactFlattenExpressionVisitor();
+class FlattenExpressionVisitorTest {
+    private final FlattenExpressionVisitor visitor = new FlattenExpressionVisitor();
+
+    @Test
+    void single() {
+        visitor.visit(new VariableExpression("xxx"));
+        var flatten = visitor.getFlatten();
+        assertThat(flatten)
+                .containsExactly("[X1]");
+
+        var factIndex = visitor.getIndex();
+        assertThat(factIndex)
+                .hasSize(1)
+                .containsEntry("xxx", "X1");
+    }
 
     @Test
     void flatten() {
@@ -28,8 +44,8 @@ class FactFlattenExpressionVisitorTest {
         assertThat(flatten)
                 .containsExactly("[X1]", "AND", "[X2]", "AND", "[X3]", "OR", "NOT", "[X3]");
 
-        var factIndex = visitor.getIndex();
-        assertThat(factIndex)
+        var index = visitor.getIndex();
+        assertThat(index)
                 .hasSize(3)
                 .containsEntry(expr1.getValue(), "X1")
                 .containsEntry(expr2.getValue(), "X2")

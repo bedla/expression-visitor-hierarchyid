@@ -1,26 +1,23 @@
 package cz.bedla.hierarchyid.rest.fact;
 
 import cz.bedla.hierarchyid.db.fact.Fact;
-import cz.bedla.hierarchyid.expression.fact.FactFlattenExpressionVisitor;
 import cz.bedla.hierarchyid.rest.ExpressionToRestDtoConverter;
 import cz.bedla.hierarchyid.rest.LeftOperator;
 import cz.bedla.hierarchyid.rest.RightOperator;
 
 
-public class FactExpressionToRestDtoConverter extends ExpressionToRestDtoConverter<FactExpressionDto, Fact> {
-
+public class FactExpressionToRestDtoConverter extends ExpressionToRestDtoConverter<FactExpressionDto> {
     @Override
-    protected FactFlattenExpressionVisitor createFlattenExpressionVisitor() {
-        return new FactFlattenExpressionVisitor();
-    }
-
-    @Override
-    protected FactExpressionDto createExpressionDto(LeftOperator leftOperator, Fact item, RightOperator rightOperator) {
-        return new FactExpressionDto(
-                leftOperator,
-                item.columnName(), operator(item.operator()), item.value(),
-                rightOperator
-        );
+    protected FactExpressionDto createExpressionDto(LeftOperator leftOperator, Object item, RightOperator rightOperator) {
+        if (item instanceof Fact fact) {
+            return new FactExpressionDto(
+                    leftOperator,
+                    fact.columnName(), operator(fact.operator()), fact.value(),
+                    rightOperator
+            );
+        } else {
+            throw new IllegalStateException("Unsupported item type: " + item);
+        }
     }
 
     private FactExpressionDto.Operator operator(Fact.Operator operator) {

@@ -8,11 +8,18 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RestDtoToExpressionConverterTest {
     private final MyRestDtoToExpressionConverter converter = new MyRestDtoToExpressionConverter();
 
+    @Test
+    void convertDto() {
+        var expression = converter.convert(List.of(new MyExpressionDto(null, "XXX", null)));
+        assertThat(expression)
+                .isEqualTo(new VariableExpression("XXX"));
+    }
 
     @Test
     void invalidInput() {

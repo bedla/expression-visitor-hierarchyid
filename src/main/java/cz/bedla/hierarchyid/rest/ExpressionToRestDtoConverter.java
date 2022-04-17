@@ -13,27 +13,25 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
 
 
-public abstract class ExpressionToRestDtoConverter<DTO, TERM_V> {
+public abstract class ExpressionToRestDtoConverter<DTO> {
     public List<DTO> convert(Expression expression) {
         requireNonNull(expression, "expression cannot be null");
 
-        var flattenVisitor = createFlattenExpressionVisitor();
+        var flattenVisitor = new FlattenExpressionVisitor();
         flattenVisitor.visit(expression);
         var flatten = flattenVisitor.getFlatten();
 
-        var idIndexList = createIdIndex(flatten);
+        var idLookupArray = createIdLookupArray(flatten);
         var indexValue = inverseMap(flattenVisitor.getIndex());
 
-        return createDtoListFromFlatten(flatten, idIndexList, indexValue);
+        return createDtoListFromFlatten(flatten, idLookupArray, indexValue);
     }
 
-    protected abstract FlattenExpressionVisitor<TERM_V> createFlattenExpressionVisitor();
-
-    private List<DTO> createDtoListFromFlatten(List<String> flatten, List<Integer> idIndexList, Map<String, TERM_V> indexValue) {
+    private List<DTO> createDtoListFromFlatten(List<String> flatten, List<Integer> idLookupArray, Map<String, Object> indexValue) {
         var dontLookBehindIdx = -1;
 
         var result = new ArrayList<DTO>();
-        for (int idIdx : idIndexList) {
+        for (int idIdx : idLookupArray) {
             var behind = lookBehind(flatten, idIdx, dontLookBehindIdx);
             var ahead = lookAhead(flatten, idIdx, dontLookBehindIdx);
 
@@ -41,15 +39,15 @@ public abstract class ExpressionToRestDtoConverter<DTO, TERM_V> {
 
             result.add(createExpressionDto(leftOperator(behind), item, rightOperator(ahead)));
 
-            // idx of ID and idx of OPERATOR
+            // idx of ID plus idx of OPERATOR
             dontLookBehindIdx = idIdx + 1;
         }
         return result;
     }
 
-    protected abstract DTO createExpressionDto(LeftOperator leftOperator, TERM_V item, RightOperator rightOperator);
+    protected abstract DTO createExpressionDto(LeftOperator leftOperator, Object item, RightOperator rightOperator);
 
-    private List<Integer> createIdIndex(List<String> flatten) {
+    private List<Integer> createIdLookupArray(List<String> flatten) {
         var idIndexArray = new ArrayList<Integer>();
         for (int i = 0; i < flatten.size(); i++) {
             var str = flatten.get(i);
@@ -60,7 +58,7 @@ public abstract class ExpressionToRestDtoConverter<DTO, TERM_V> {
         return idIndexArray;
     }
 
-    private Map<String, TERM_V> inverseMap(Map<TERM_V, String> map) {
+    private Map<String, Object> inverseMap(Map<Object, String> map) {
         if (new HashSet<>(map.values()).size() != map.size()) {
             throw new IllegalStateException("Values in map are not unique: " + map.values());
         }
@@ -69,7 +67,7 @@ public abstract class ExpressionToRestDtoConverter<DTO, TERM_V> {
                 .collect(toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
-    private TERM_V findItemById(Map<String, TERM_V> index, String id) {
+    private Object findItemById(Map<String, Object> index, String id) {
         var key = StringUtils.removeEnd(StringUtils.removeStart(id, "["), "]");
         var item = index.get(key);
         if (item == null) {

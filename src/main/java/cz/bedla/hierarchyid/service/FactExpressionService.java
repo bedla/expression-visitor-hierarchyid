@@ -15,21 +15,21 @@ import java.util.Optional;
 public class FactExpressionService {
     private final FactExpressionRepository repository;
     private final FactRestDtoToExpressionConverter restDtoToExpressionConverter;
-    private final FactExpressionToRestDtoConverter factExpressionToRestDtoConverter;
+    private final FactExpressionToRestDtoConverter expressionToRestDtoConverter;
 
     public FactExpressionService(
             FactExpressionRepository repository,
             FactRestDtoToExpressionConverter restDtoToExpressionConverter,
-            FactExpressionToRestDtoConverter factExpressionToRestDtoConverter
+            FactExpressionToRestDtoConverter expressionToRestDtoConverter
     ) {
         this.repository = repository;
         this.restDtoToExpressionConverter = restDtoToExpressionConverter;
-        this.factExpressionToRestDtoConverter = factExpressionToRestDtoConverter;
+        this.expressionToRestDtoConverter = expressionToRestDtoConverter;
     }
 
     public Optional<List<FactExpressionDto>> getExpression(int parentId) {
         return repository.getExpression(parentId)
-                .map(factExpressionToRestDtoConverter::convert);
+                .map(expressionToRestDtoConverter::convert);
     }
 
     public int insertExpression(List<FactExpressionDto> list) {

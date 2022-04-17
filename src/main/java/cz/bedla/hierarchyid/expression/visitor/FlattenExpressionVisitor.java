@@ -12,21 +12,21 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class FlattenExpressionVisitor<TERM_V> implements ExpressionVisitor<Void, TERM_V> {
+public class FlattenExpressionVisitor implements ExpressionVisitor<Void, Object> {
     private final List<String> flatten = new ArrayList<>();
 
-    private final Map<TERM_V, String> index = new IdentityHashMap<>();
+    private final Map<Object, String> index = new IdentityHashMap<>();
 
     public List<String> getFlatten() {
         return flatten;
     }
 
-    public Map<TERM_V, String> getIndex() {
+    public Map<Object, String> getIndex() {
         return index;
     }
 
     @Override
-    public Void visit(TerminalExpression<TERM_V> expression) {
+    public Void visit(TerminalExpression<Object> expression) {
         var idStr = index.computeIfAbsent(expression.getValue(), key -> "X" + (index.size() + 1));
         flatten.add("[" + idStr + "]");
         return null;

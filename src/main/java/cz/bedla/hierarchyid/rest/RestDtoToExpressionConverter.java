@@ -1,11 +1,7 @@
 package cz.bedla.hierarchyid.rest;
 
-import cz.bedla.hierarchyid.antlr4.LogicalStringToExpressionVisitor;
-import cz.bedla.hierarchyid.antlr4.SimpleBooleanLexer;
-import cz.bedla.hierarchyid.antlr4.SimpleBooleanParser;
+import cz.bedla.hierarchyid.antlr4.StringToExpressionParser;
 import cz.bedla.hierarchyid.expression.Expression;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +24,7 @@ public abstract class RestDtoToExpressionConverter<DTO extends ExpressionDto, V>
         var variableIndex = new HashMap<String, DTO>();
         var expressionStr = createExpressionString(list, variableIndex);
 
-        var lexer = new SimpleBooleanLexer(CharStreams.fromString(expressionStr));
-        var parser = new SimpleBooleanParser(new CommonTokenStream(lexer));
-        var expression = new LogicalStringToExpressionVisitor().visit(parser.parse());
+        var expression = new StringToExpressionParser().parse(expressionStr);
 
         return createReplaceVariablesVisitor(variableIndex).visit(expression);
     }
@@ -47,10 +41,11 @@ public abstract class RestDtoToExpressionConverter<DTO extends ExpressionDto, V>
             }
             expressionList.add(key);
             if (item.rightOperator() != null) {
-                switch (item.rightOperator()) {
-                    case AND -> expressionList.add(AND_OPERATOR_STR);
-                    case OR -> expressionList.add(OR_OPERATOR_STR);
-                }
+                String operatorStr = switch (item.rightOperator()) {
+                    case AND -> AND_OPERATOR_STR;
+                    case OR -> OR_OPERATOR_STR;
+                };
+                expressionList.add(operatorStr);
             }
         }
         return expressionList.stream().collect(joining(" ", "", ""));

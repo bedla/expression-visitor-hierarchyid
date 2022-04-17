@@ -6,7 +6,7 @@ import cz.bedla.hierarchyid.expression.NotExpression;
 import cz.bedla.hierarchyid.expression.OrExpression;
 import cz.bedla.hierarchyid.expression.VariableExpression;
 
-public class LogicalStringToExpressionVisitor extends SimpleBooleanBaseVisitor<Expression> {
+public class StringToExpressionVisitor extends SimpleBooleanBaseVisitor<Expression> {
     @Override
     public Expression visitParse(SimpleBooleanParser.ParseContext ctx) {
         return super.visit(ctx.expression());
