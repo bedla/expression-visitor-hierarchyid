@@ -94,7 +94,9 @@ public class FactExpressionRepository {
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                         """,
                 valuesList,
-                new int[]{Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
+                new int[]{
+                        Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
     }
 
     public boolean updateExpression(Expression expression, int parentId) {

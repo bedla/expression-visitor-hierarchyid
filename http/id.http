@@ -1,0 +1,55 @@
+GET http://localhost:8080/id-expression/999
+Accept: application/json
+
+###
+
+GET http://localhost:8080/id-expression/1
+Accept: application/json
+
+###
+
+GET http://localhost:8080/id-expression/2
+Accept: application/json
+
+###
+
+POST http://localhost:8080/id-expression
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "leftOperator": null,
+    "id": 123,
+    "rightOperator": "AND"
+  },
+  {
+    "leftOperator": "NOT",
+    "id": 456,
+    "rightOperator": "OR"
+  },
+  {
+    "leftOperator": null,
+    "id": 789,
+    "rightOperator": null
+  }
+]
+
+
+###
+
+PUT http://localhost:8080/id-expression/2
+Accept: application/json
+Content-Type: application/json
+
+[
+  {
+    "leftOperator": null,
+    "id": 609112567,
+    "operator": "EQ",
+    "value": "hello",
+    "rightOperator": null
+  }
+]
+
+###
