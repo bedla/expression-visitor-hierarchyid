@@ -15,7 +15,9 @@
     <description>expression-visitor-spel</description>
     <properties>
         <java.version>17</java.version>
-        <start-class>cz.bedla.hierarchyid.HierarchyIdApplicationMain</start-class>
+
+        <!--versions-->
+        <antlr4-maven-plugin.version>4.10.1</antlr4-maven-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,7 +38,6 @@
             <scope>runtime</scope>
         </dependency>
 
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.9.3</version>
+            <version>${antlr4-maven-plugin.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -73,7 +74,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.9.3</version>
+                <version>${antlr4-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
