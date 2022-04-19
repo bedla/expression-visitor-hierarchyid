@@ -83,21 +83,22 @@
                 <version>${antlr4-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>generate-parser</id>
                         <goals>
                             <goal>antlr4</goal>
                         </goals>
-                        <configuration>
-                            <visitor>true</visitor>
-                            <outputDirectory>
-                                ${project.build.directory}/generated-sources/antlr4/cz/bedla/hierarchyid/antlr4
-                            </outputDirectory>
-                            <arguments>
-                                <argument>-package</argument>
-                                <argument>cz.bedla.hierarchyid.antlr4</argument>
-                            </arguments>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <visitor>true</visitor>
+                    <outputDirectory>
+                        ${project.build.directory}/generated-sources/antlr4/cz/bedla/hierarchyid/antlr4
+                    </outputDirectory>
+                    <arguments>
+                        <argument>-package</argument>
+                        <argument>cz.bedla.hierarchyid.antlr4</argument>
+                    </arguments>
+                </configuration>
             </plugin>
         </plugins>
     </build>
