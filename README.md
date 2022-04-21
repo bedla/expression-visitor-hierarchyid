@@ -326,10 +326,6 @@ Other features:
 - Parse logical expression string without parentheses to detect implicit operator precedence
     - see `StringToExpressionParser` class
     - [ANTLR](https://www.antlr.org/) grammar `SimpleBoolean.g4`
-
----
-
-TODO
-
-- [ ] Testcontainers test
-- [ ] REST API tree structure
+- Integration tests using [Testcontainers](https://www.testcontainers.org/)
+    - using MSSQL dockerized DB
+    - and [Liquibase](https://www.liquibase.org/) for DB migration

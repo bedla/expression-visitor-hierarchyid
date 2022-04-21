@@ -20,6 +20,7 @@
         <antlr4-maven-plugin.version>4.10.1</antlr4-maven-plugin.version>
         <guava.version>31.1-jre</guava.version>
         <jsqlparser.version>4.4</jsqlparser.version>
+        <testcontainers.version>1.17.1</testcontainers.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,7 +70,28 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mssqlserver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
